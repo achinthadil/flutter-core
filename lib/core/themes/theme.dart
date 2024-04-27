@@ -25,10 +25,10 @@ class AppTheme {
     ),
     textTheme: const TextTheme(
       headlineLarge: TextStyle(
-          fontFamily: CoreFonts.poppins,
-          fontSize: 35,
-          fontWeight: FontWeight.w800,
-          color: AppPallete.whiteColor),
+        fontFamily: CoreFonts.poppins,
+        fontSize: 35,
+        fontWeight: FontWeight.w800,
+      ),
       titleSmall: TextStyle(
         fontFamily: CoreFonts.poppins,
         fontSize: 12,
