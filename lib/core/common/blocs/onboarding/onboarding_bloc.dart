@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../constants/base_constants.dart';
+
 part 'onboarding_event.dart';
 part 'onboarding_state.dart';
 
@@ -22,7 +24,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     await Future.delayed(
       const Duration(milliseconds: 300),
       () async {
-        await _prefs.setBool('isOnboardingComplete', true);
+        await _prefs.setBool(CoreBaseConstants.isOnboardingComplete, true);
         emit(OnboardingCompleteState());
       },
     );

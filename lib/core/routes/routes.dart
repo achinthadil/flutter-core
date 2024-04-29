@@ -2,29 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/signin_screen.dart';
+import '../../features/auth/presentation/screens/signup_screen.dart';
 import '../../init_dependencies.dart';
 import '../common/screens/onboarding/onboarding_screen.dart';
+import '../constants/base_constants.dart';
+import 'route_paths.dart';
 
 class AppRouter {
   static GoRouter createRouter() {
     final sharedPreferences = serviceLocator<SharedPreferences>();
     bool isOnboardingComplete =
-        sharedPreferences.getBool('isOnboardingComplete') ?? false;
+        sharedPreferences.getBool(CoreBaseConstants.isOnboardingComplete) ??
+            false;
 
     return GoRouter(
       debugLogDiagnostics: true,
-      initialLocation: isOnboardingComplete ? '/login' : '/onboarding',
+      initialLocation: isOnboardingComplete
+          ? CoreRoutePaths.signin
+          : CoreRoutePaths.onboarding,
       routes: <GoRoute>[
         GoRoute(
-          path: '/onboarding',
+          path: CoreRoutePaths.onboarding,
           builder: (BuildContext context, GoRouterState state) =>
               const OnboardingScreen(),
         ),
         GoRoute(
-          path: '/login',
+          path: CoreRoutePaths.signin,
           builder: (BuildContext context, GoRouterState state) =>
-              const LoginScreen(),
+              const SignInScreen(),
+        ),
+        GoRoute(
+          path: CoreRoutePaths.signup,
+          builder: (BuildContext context, GoRouterState state) =>
+              const SignUpScreen(),
         ),
         // Add other routes as needed
       ],
