@@ -12,7 +12,7 @@ Future<void> showAlertDialog({
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(
-          title ?? '',
+          title ,
           style: Theme.of(context)
               .textTheme
               .titleLarge
@@ -21,7 +21,7 @@ Future<void> showAlertDialog({
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text(content ?? ''),
+              Text(content),
             ],
           ),
         ),

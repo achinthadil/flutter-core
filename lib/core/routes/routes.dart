@@ -4,22 +4,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/auth/presentation/screens/signin_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
+import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
 import '../../init_dependencies.dart';
-import '../common/screens/onboarding/onboarding_screen.dart';
-import '../constants/base_constants.dart';
+import '../constants/core_constants.dart';
 import 'route_paths.dart';
 
 class AppRouter {
   static GoRouter createRouter() {
     final sharedPreferences = serviceLocator<SharedPreferences>();
     bool isOnboardingComplete =
-        sharedPreferences.getBool(CoreBaseConstants.isOnboardingComplete) ??
-            false;
+        sharedPreferences.getBool(CoreConstants.isOnboardingComplete) ?? false;
+    String? userToken = sharedPreferences.getString(CoreConstants.userToken);
 
     return GoRouter(
       debugLogDiagnostics: true,
       initialLocation: isOnboardingComplete
-          ? CoreRoutePaths.signin
+          ? (userToken != null ? CoreRoutePaths.home : CoreRoutePaths.signin)
           : CoreRoutePaths.onboarding,
       routes: <GoRoute>[
         GoRoute(
@@ -36,6 +37,11 @@ class AppRouter {
           path: CoreRoutePaths.signup,
           builder: (BuildContext context, GoRouterState state) =>
               const SignUpScreen(),
+        ),
+        GoRoute(
+          path: CoreRoutePaths.home,
+          builder: (BuildContext context, GoRouterState state) =>
+              const HomeScreen(),
         ),
         // Add other routes as needed
       ],

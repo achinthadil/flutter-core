@@ -5,14 +5,14 @@ import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../init_dependencies.dart';
-import '../constants/base_constants.dart';
+import '../constants/core_constants.dart';
 import 'retry_request.dart';
 
 class AppDio {
   final sharedPreferences = serviceLocator<SharedPreferences>();
   final dio = Dio(
     BaseOptions(
-      baseUrl: CoreBaseConstants.baseUrl,
+      baseUrl: CoreConstants.baseUrl,
     ),
   );
   final logger = Logger();
@@ -29,8 +29,10 @@ class AppDio {
 
           //! read the key from get storage
           String? idToken = sharedPreferences.getString(
-            CoreBaseConstants.userToken,
+            CoreConstants.userToken,
           );
+
+          debugPrint('😂TOKEN:: $idToken');
 
           if (idToken != "") {
             options.headers["Authorization"] = 'Bearer $idToken';
@@ -69,7 +71,7 @@ class AppDio {
                   // ignore: prefer_interpolation_to_compose_strings
                   'Bearer ' +
                       sharedPreferences.getString(
-                        CoreBaseConstants.userToken,
+                        CoreConstants.userToken,
                       )!;
 
               try {
@@ -91,8 +93,6 @@ class AppDio {
                 return handler.next(
                     DioException(requestOptions: requestOptions, error: e));
               }
-            } else {
-              return handler.next(error); // Terminate if token not refreshed
             }
           } else {
             return handler.next(error);

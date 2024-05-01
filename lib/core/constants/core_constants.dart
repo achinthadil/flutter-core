@@ -1,4 +1,4 @@
-class CoreBaseConstants {
+class CoreConstants {
   //! urls
   static const baseUrl = 'https://dummyjson.com';
 

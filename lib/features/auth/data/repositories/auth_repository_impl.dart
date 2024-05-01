@@ -14,7 +14,6 @@ class AuthRepositoryImpl implements AuthRepository {
   const AuthRepositoryImpl(this.authRemoteDataSource);
   @override
   Future<Either<Failure, User>> currentUser() {
-    // TODO: implement currentUser
     throw UnimplementedError();
   }
 

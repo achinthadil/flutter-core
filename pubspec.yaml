@@ -61,6 +61,7 @@ dependencies:
   #  N
   #  O
   #  P
+  package_info_plus: ^8.0.0
   #  Q
   #  R
   retrofit: ^4.1.0

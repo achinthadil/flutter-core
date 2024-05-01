@@ -6,9 +6,11 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import 'core/common/blocs/onboarding/onboarding_bloc.dart';
+import 'core/common/cubits/app_user/app_user_cubit.dart';
 import 'core/themes/theme.dart';
 import 'features/auth/presentation/blocs/auth_bloc.dart';
+import 'features/home/presentation/blocs/home_bloc.dart';
+import 'features/onboarding/presentation/blocs/onboarding_bloc.dart';
 import 'init_dependencies.dart';
 
 void main() async {
@@ -22,19 +24,35 @@ void main() async {
         BlocProvider<OnboardingBloc>(
           create: (context) => serviceLocator<OnboardingBloc>(),
         ),
+        BlocProvider<AppUserCubit>(
+          create: (context) => serviceLocator<AppUserCubit>(),
+        ),
         BlocProvider<AuthBloc>(
           create: (context) => serviceLocator<AuthBloc>(),
         ),
+        BlocProvider<HomeBloc>(
+          create: (context) => serviceLocator<HomeBloc>(),
+        ),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final GoRouter _router = GetIt.I<GoRouter>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

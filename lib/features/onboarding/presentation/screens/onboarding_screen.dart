@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../constants/image_paths.dart';
-import '../../../routes/route_paths.dart';
-import '../../../themes/app_pallete.dart';
-import '../../blocs/onboarding/onboarding_bloc.dart';
-import '../../widgets/loader.dart';
+import '../../../../core/common/widgets/loader.dart';
+import '../../../../core/constants/image_paths.dart';
+import '../../../../core/routes/route_paths.dart';
+import '../../../../core/themes/app_pallete.dart';
+import '../blocs/onboarding_bloc.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/common/cubits/app_user/app_user_cubit.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/constants/icon_paths.dart';
 import '../../../../core/routes/route_paths.dart';
@@ -41,19 +42,29 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
-          if (state is AuthFailure) {
-            showAlertDialog(
-              context: context,
-              title: 'Error',
-              content: 'Please check your credentials and try again.',
-            );
-          }
-          if (state is AuthSuccess) {
-            showSnackBar(context, "Successfully SignIn");
-          }
-        },
+        body: MultiBlocListener(
+      listeners: [
+        BlocListener<AuthBloc, AuthState>(
+          listener: (context, state) {
+            if (state is AuthFailure) {
+              showAlertDialog(
+                context: context,
+                title: 'Error',
+                content: 'Please check your credentials and try again.',
+              );
+            }
+          },
+        ),
+        BlocListener<AppUserCubit, AppUserState>(
+          listener: (context, state) {
+            if (state is AppUserLoggedIn) {
+              showSnackBar(context, "Successfully signed in!");
+              context.go(CoreRoutePaths.home);
+            }
+          },
+        ),
+      ],
+      child: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
           if (state is AuthLoading) {
             return const Loader();
@@ -205,6 +216,6 @@ class _SignInScreenState extends State<SignInScreen> {
           );
         },
       ),
-    );
+    ));
   }
 }
