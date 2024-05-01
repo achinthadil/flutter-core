@@ -8,46 +8,42 @@ import '../../../../core/routes/route_paths.dart';
 import '../../../../init_dependencies.dart';
 import '../blocs/home_bloc.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider<HomeBloc>(
+      create: (_) {
+        final homeBloc = serviceLocator<HomeBloc>();
+        homeBloc.add(LoadProducts()); // Trigger initial data loading
+        return homeBloc;
+      },
+      child: const _HomeScreenContent(),
+    );
+  }
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  late final HomeBloc _homeBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _homeBloc = serviceLocator<HomeBloc>();
-    _homeBloc.add(LoadProducts());
-  }
-
-  @override
-  void dispose() {
-    _homeBloc.close();
-    super.dispose();
-  }
+class _HomeScreenContent extends StatelessWidget {
+  const _HomeScreenContent({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<AppUserCubit, AppUserState>(
-          listener: (context, state) {
-            if (state is AppUserInitial) {
-              context.go(CoreRoutePaths.signin);
-            }
-          },
-        ),
         BlocListener<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is HomeFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text(state.failure)),
               );
+            }
+          },
+        ),
+        BlocListener<AppUserCubit, AppUserState>(
+          listener: (context, state) {
+            if (state is AppUserInitial) {
+              context.go(CoreRoutePaths.signin);
             }
           },
         ),
@@ -66,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            debugPrint('State 😂:: $state');
             if (state is HomeLoading) {
               return const Loader();
             } else if (state is HomeSuccess) {
@@ -75,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   final product = state.productList.products?[index];
                   return ListTile(
-                    title: Text(product?.title ?? ''),
-                    subtitle: Text("Price: ${product?.price}"),
+                    title: Text(product?.title ?? 'No title'),
+                    subtitle: Text("Price: ${product?.price ?? 'N/A'}"),
                   );
                 },
               );
