@@ -1,40 +1,65 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:go_router/go_router.dart';
 // ignore: unused_import, depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
-import 'core/common/blocs/onboarding/onboarding_bloc.dart';
+import 'core/common/cubits/app_user/app_user_cubit.dart';
 import 'core/themes/theme.dart';
+import 'features/auth/presentation/blocs/auth_bloc.dart';
+import 'features/home/presentation/blocs/home_bloc.dart';
+import 'features/onboarding/presentation/blocs/onboarding_bloc.dart';
 import 'init_dependencies.dart';
 
 void main() async {
-  usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+  usePathUrlStrategy();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await initDependencies();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  final GoRouter _router = GetIt.I<GoRouter>();
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
+  runApp(
+    MultiBlocProvider(
       providers: [
         BlocProvider<OnboardingBloc>(
           create: (context) => serviceLocator<OnboardingBloc>(),
         ),
-        // Add other BlocProviders as necessary
+        BlocProvider<AppUserCubit>(
+          create: (context) => serviceLocator<AppUserCubit>(),
+        ),
+        BlocProvider<AuthBloc>(
+          create: (context) => serviceLocator<AuthBloc>(),
+        ),
+        BlocProvider<HomeBloc>(
+          create: (context) => serviceLocator<HomeBloc>(),
+        ),
       ],
-      child: MaterialApp.router(
-        theme: AppTheme.lightThemeMode,
-        routerConfig: _router,
-        title: 'Flutter Core',
-      ),
+      child: const MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GoRouter _router = GetIt.I<GoRouter>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      theme: AppTheme.lightThemeMode,
+      routerConfig: _router,
+      title: 'Flutter Core',
     );
   }
 }

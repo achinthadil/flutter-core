@@ -7,7 +7,7 @@ class AppTheme {
   static _border([Color color = AppPallete.borderColor]) => OutlineInputBorder(
         borderSide: BorderSide(
           color: color,
-          width: 3,
+          width: 1.3,
         ),
         borderRadius: BorderRadius.circular(10),
       );
@@ -26,38 +26,51 @@ class AppTheme {
     textTheme: const TextTheme(
       headlineLarge: TextStyle(
         fontFamily: CoreFonts.poppins,
-        fontSize: 35,
+        fontSize: 50,
         fontWeight: FontWeight.w800,
+        color: AppPallete.blackColor,
+      ),
+      headlineMedium: TextStyle(
+        fontFamily: CoreFonts.poppins,
+        fontSize: 30,
+        fontWeight: FontWeight.w800,
+        color: AppPallete.blackColor,
       ),
       titleSmall: TextStyle(
         fontFamily: CoreFonts.poppins,
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: FontWeight.w600,
+        color: AppPallete.blackColor,
       ),
       titleMedium: TextStyle(
         fontFamily: CoreFonts.poppins,
-        fontSize: 14,
-        fontWeight: FontWeight.w700,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: AppPallete.blackColor,
       ),
       titleLarge: TextStyle(
         fontFamily: CoreFonts.poppins,
         fontSize: 20,
         fontWeight: FontWeight.w800,
+        color: AppPallete.blackColor,
       ),
       bodySmall: TextStyle(
         fontFamily: CoreFonts.poppins,
         fontSize: 12,
         fontWeight: FontWeight.w400,
+        color: AppPallete.blackColor,
       ),
       bodyMedium: TextStyle(
         fontFamily: CoreFonts.poppins,
         fontSize: 14,
         fontWeight: FontWeight.w400,
+        color: AppPallete.blackColor,
       ),
       bodyLarge: TextStyle(
         fontFamily: CoreFonts.poppins,
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: FontWeight.w400,
+        color: AppPallete.blackColor,
       ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -70,11 +83,20 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      contentPadding: const EdgeInsets.all(27),
+      contentPadding: const EdgeInsets.all(18),
       border: _border(),
       enabledBorder: _border(),
-      focusedBorder: _border(AppPallete.gradient2),
+      focusedBorder: _border(AppPallete.focusBorderColor),
       errorBorder: _border(AppPallete.errorColor),
+      hintStyle: const TextStyle(
+        fontWeight: FontWeight.w400,
+        fontFamily: CoreFonts.poppins,
+        fontSize: 16,
+      ),
+      errorStyle: const TextStyle(
+        color: AppPallete.errorColor,
+        fontFamily: CoreFonts.poppins,
+      ),
     ),
   );
 }

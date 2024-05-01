@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../constants/image_paths.dart';
-import '../../../themes/app_pallete.dart';
-import '../../blocs/onboarding/onboarding_bloc.dart';
-import '../../widgets/loader.dart';
+import '../../../../core/common/widgets/loader.dart';
+import '../../../../core/constants/image_paths.dart';
+import '../../../../core/routes/route_paths.dart';
+import '../../../../core/themes/app_pallete.dart';
+import '../blocs/onboarding_bloc.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -19,17 +20,16 @@ class OnboardingScreen extends StatelessWidget {
       body: BlocConsumer<OnboardingBloc, OnboardingState>(
         listener: (context, state) {
           if (state is OnboardingCompleteState) {
-            context.go('/login');
+            context.go(CoreRoutePaths.signin);
           }
         },
         builder: (context, state) {
-          debugPrint("😂 state :: $state");
           return Stack(
             children: [
               //! background image
               SvgPicture.asset(
                 height: double.infinity,
-                CoreImagePaths.splashImage,
+                CoreImagePaths.onboardingTwo,
                 fit: BoxFit.cover,
               ),
               //! gradient
@@ -61,8 +61,11 @@ class OnboardingScreen extends StatelessWidget {
                         'Cook Like a Chef',
                         style: Theme.of(context)
                             .textTheme
-                            .headlineLarge
-                            ?.copyWith(color: AppPallete.whiteColor),
+                            .headlineMedium
+                            ?.copyWith(
+                              color: AppPallete.whiteColor,
+                              fontSize: 35,
+                            ),
                       ),
                     ),
                     const SizedBox(height: 20),
