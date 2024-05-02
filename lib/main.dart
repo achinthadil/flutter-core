@@ -10,6 +10,7 @@ import 'core/common/cubits/app_user/app_user_cubit.dart';
 import 'core/themes/theme.dart';
 import 'features/auth/presentation/blocs/auth_bloc.dart';
 import 'features/home/presentation/blocs/home_bloc.dart';
+import 'features/main/presentation/blocs/main_bloc.dart';
 import 'features/onboarding/presentation/blocs/onboarding_bloc.dart';
 import 'init_dependencies.dart';
 
@@ -17,7 +18,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   usePathUrlStrategy();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await initDependencies();
+  try {
+    await initDependencies();
+  } catch (e) {
+    debugPrint('Failed to initialize dependencies: $e');
+    // Consider adding error reporting or recovery logic here
+  }
   runApp(
     MultiBlocProvider(
       providers: [
@@ -30,29 +36,22 @@ void main() async {
         BlocProvider<AuthBloc>(
           create: (context) => serviceLocator<AuthBloc>(),
         ),
+        BlocProvider<MainBloc>(
+          create: (context) => serviceLocator<MainBloc>(),
+        ),
         BlocProvider<HomeBloc>(
           create: (context) => serviceLocator<HomeBloc>(),
         ),
       ],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   final GoRouter _router = GetIt.I<GoRouter>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

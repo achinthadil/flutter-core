@@ -17,6 +17,7 @@ import 'features/home/data/repositories/home_repository_impl.dart';
 import 'features/home/domain/repositories/home_repository.dart';
 import 'features/home/domain/usecases/get_products.dart';
 import 'features/home/presentation/blocs/home_bloc.dart';
+import 'features/main/presentation/blocs/main_bloc.dart';
 import 'features/onboarding/presentation/blocs/onboarding_bloc.dart';
 
 final serviceLocator = GetIt.instance;
@@ -43,6 +44,8 @@ Future<void> initDependencies() async {
   _coreDependencies();
 
   _auth();
+
+  _main();
 
   _home();
 }
@@ -72,6 +75,10 @@ void _auth() {
     ..registerFactory(() => UserSignIn(serviceLocator()))
     ..registerLazySingleton(() =>
         AuthBloc(userSignIn: serviceLocator(), appUserCubit: serviceLocator()));
+}
+
+void _main() {
+  serviceLocator.registerLazySingleton<MainBloc>(() => MainBloc());
 }
 
 void _home() {

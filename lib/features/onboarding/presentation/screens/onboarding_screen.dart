@@ -29,8 +29,8 @@ class OnboardingScreen extends StatelessWidget {
               //! background image
               SvgPicture.asset(
                 height: double.infinity,
-                CoreImagePaths.onboardingTwo,
-                fit: BoxFit.cover,
+                CoreImagePaths.coreOnboarding,
+                fit: BoxFit.fill,
               ),
               //! gradient
               Container(
@@ -58,7 +58,7 @@ class OnboardingScreen extends StatelessWidget {
                     FadeIn(
                       duration: const Duration(seconds: 3),
                       child: Text(
-                        'Cook Like a Chef',
+                        'Lorem Ipsum',
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium
@@ -75,7 +75,7 @@ class OnboardingScreen extends StatelessWidget {
                       child: FadeIn(
                         duration: const Duration(seconds: 1),
                         child: Text(
-                          'De Chef is a user-friendly recipe app designed for those who are new to cooking and want to try new recipes at home',
+                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
                           style:
                               Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     color: AppPallete.whiteColor,

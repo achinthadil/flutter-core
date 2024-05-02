@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -16,18 +17,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final HomeBloc _homeBloc;
+  final HomeBloc _homeBloc = serviceLocator<HomeBloc>();
 
   @override
   void initState() {
     super.initState();
-    _homeBloc = serviceLocator<HomeBloc>();
     _homeBloc.add(LoadProducts());
   }
 
   @override
   void dispose() {
-    _homeBloc.close();
     super.dispose();
   }
 
@@ -66,19 +65,21 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            debugPrint('State 😂:: $state');
             if (state is HomeLoading) {
               return const Loader();
             } else if (state is HomeSuccess) {
-              return ListView.builder(
-                itemCount: state.productList.products?.length ?? 0,
-                itemBuilder: (context, index) {
-                  final product = state.productList.products?[index];
-                  return ListTile(
-                    title: Text(product?.title ?? ''),
-                    subtitle: Text("Price: ${product?.price}"),
-                  );
-                },
+              return FadeIn(
+                duration: const Duration(milliseconds: 800),
+                child: ListView.builder(
+                  itemCount: state.productList.products?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final product = state.productList.products?[index];
+                    return ListTile(
+                      title: Text(product?.title ?? ''),
+                      subtitle: Text("Price: ${product?.price}"),
+                    );
+                  },
+                ),
               );
             } else if (state is HomeFailure) {
               return Center(child: Text(state.failure));
