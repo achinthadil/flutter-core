@@ -29,6 +29,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   void initState() {
+    _emailController.text = 'kminchelle';
+    _passwordController.text = '0lelplR';
     super.initState();
   }
 
@@ -59,7 +61,7 @@ class _SignInScreenState extends State<SignInScreen> {
           listener: (context, state) {
             if (state is AppUserLoggedIn) {
               showSnackBar(context, "Successfully signed in!");
-              context.go(CoreRoutePaths.home);
+              context.go(CoreRoutePaths.main);
             }
           },
         ),

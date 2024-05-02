@@ -22,28 +22,28 @@ class MainScreen extends StatelessWidget {
 
     return Scaffold(
       body: child, // Directly use the child provided by the ShellRoute
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) {
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: currentIndex,
+        onDestinationSelected: (index) {
           if (!context.read<MainBloc>().isClosed) {
             context.read<MainBloc>().add(TabUpdated(index));
             context.go(_getPathForIndex(index));
           }
         },
-        items: const [
-          BottomNavigationBarItem(
+        destinations: const [
+          NavigationDestination(
             icon: Icon(Icons.home),
             label: 'Home',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.people),
             label: 'Users',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.notifications),
             label: 'Notifications',
           ),
-          BottomNavigationBarItem(
+          NavigationDestination(
             icon: Icon(Icons.settings),
             label: 'Settings',
           ),
@@ -55,7 +55,7 @@ class MainScreen extends StatelessWidget {
   String _getPathForIndex(int index) {
     switch (index) {
       case 0:
-        return CoreRoutePaths.home;
+        return CoreRoutePaths.main;
       case 1:
         return CoreRoutePaths.users;
       case 2:
@@ -63,7 +63,7 @@ class MainScreen extends StatelessWidget {
       case 3:
         return CoreRoutePaths.settings;
       default:
-        return CoreRoutePaths.home;
+        return CoreRoutePaths.main;
     }
   }
 }

@@ -3,4 +3,5 @@ class CoreImagePaths {
   static const String onboardingImage = 'assets/images/onboarding_screen.svg';
   static const String onboardingOne = 'assets/images/onboarding_one.svg';
   static const String onboardingTwo = 'assets/images/onboarding_two.svg';
+  static const String coreOnboarding = 'assets/images/core_splash.svg';
 }

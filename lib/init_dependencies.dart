@@ -88,5 +88,5 @@ void _home() {
     ..registerFactory<HomeRepository>(
         () => HomeRepositoryImpl(serviceLocator()))
     ..registerFactory(() => GetProducts(serviceLocator()))
-    ..registerFactory(() => HomeBloc(getProducts: serviceLocator()));
+    ..registerLazySingleton(() => HomeBloc(getProducts: serviceLocator()));
 }
