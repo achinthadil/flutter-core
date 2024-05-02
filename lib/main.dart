@@ -21,7 +21,7 @@ void main() async {
   try {
     await initDependencies();
   } catch (e) {
-    debugPrint('Failed to initialize dependencies: $e');
+    debugPrint('❌ Failed to initialize dependencies: $e');
     // Consider adding error reporting or recovery logic here
   }
   runApp(

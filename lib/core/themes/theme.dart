@@ -12,7 +12,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(10),
       );
   static final lightThemeMode = ThemeData.light(useMaterial3: true).copyWith(
-    colorScheme: ColorScheme.fromSeed(seedColor: AppPallete.schemeColor),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppPallete.greenColor),
     scaffoldBackgroundColor: AppPallete.backgroundColor,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppPallete.whiteColor,
@@ -79,7 +79,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(7),
         ),
-        backgroundColor: AppPallete.schemeColor,
+        backgroundColor: AppPallete.greenColor,
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
