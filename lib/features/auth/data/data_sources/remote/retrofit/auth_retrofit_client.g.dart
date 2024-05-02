@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_remote_data_source.dart';
+part of 'auth_retrofit_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'auth_remote_data_source.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _AuthRemoteDataSource implements AuthRemoteDataSource {
-  _AuthRemoteDataSource(
+class _AuthRetrofitClient implements AuthRetrofitClient {
+  _AuthRetrofitClient(
     this._dio, {
     this.baseUrl,
   });
@@ -19,7 +19,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
   String? baseUrl;
 
   @override
-  Future<AuthModel> signInWithEmailAndPassword(String data) async {
+  Future<AuthModel> signInWithUserNameAndPassword(String data) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -46,20 +46,20 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserModel> getCurrentUser() async {
+  Future<AuthModel> getCurrentUser() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<UserModel>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<AuthModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/auth/me',
+              '/auth/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -68,7 +68,7 @@ class _AuthRemoteDataSource implements AuthRemoteDataSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = UserModel.fromJson(_result.data!);
+    final value = AuthModel.fromJson(_result.data!);
     return value;
   }
 

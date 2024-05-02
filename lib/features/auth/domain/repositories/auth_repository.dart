@@ -2,11 +2,12 @@ import 'package:fpdart/fpdart.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../entities/auth.dart';
-import '../entities/user.dart';
 
 abstract interface class AuthRepository {
-  Future<Either<Failure, Auth>> signInWithEmailAndPassword(
+  Future<Either<Failure, Auth>> signInWithUserNameAndPassword(
       {required String loginCredential});
 
-  Future<Either<Failure, User>> currentUser();
+  Future<Either<Failure, Auth>> currentUser();
+
+  Future<Either<Failure, bool>> logout();
 }

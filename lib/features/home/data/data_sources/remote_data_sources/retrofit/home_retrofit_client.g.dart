@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_remote_data_source.dart';
+part of 'home_retrofit_client.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'home_remote_data_source.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _HomeRemoteDataSource implements HomeRemoteDataSource {
-  _HomeRemoteDataSource(
+class _HomeRetrofitClient implements HomeRetrofitClient {
+  _HomeRetrofitClient(
     this._dio, {
     this.baseUrl,
   });

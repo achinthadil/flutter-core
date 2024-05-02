@@ -60,7 +60,7 @@ class _SignInScreenState extends State<SignInScreen> {
         BlocListener<AppUserCubit, AppUserState>(
           listener: (context, state) {
             if (state is AppUserLoggedIn) {
-              showSnackBar(context, "Successfully signed in!");
+              showSnackBar(context, "Successfully Signed In");
               context.go(CoreRoutePaths.main);
             }
           },

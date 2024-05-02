@@ -3,3 +3,9 @@ class ServerExceptions implements Exception {
 
   const ServerExceptions(this.message);
 }
+
+class AuthException implements Exception {
+  final String message;
+
+  const AuthException(this.message);
+}
