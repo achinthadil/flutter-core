@@ -16,8 +16,8 @@ add_executable(${BINARY_NAME} WIN32
   "runner.exe.manifest"
 )
 
-# Apply the standard set of build settings. This can be removed for applications
-# that need different build settings.
+# Apply the standard set of build feature4. This can be removed for applications
+# that need different build feature4.
 apply_standard_settings(${BINARY_NAME})
 
 # Add preprocessor definitions for the build version.

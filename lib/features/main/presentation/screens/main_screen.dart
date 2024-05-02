@@ -33,19 +33,19 @@ class MainScreen extends StatelessWidget {
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Tab 1',
           ),
           NavigationDestination(
             icon: Icon(Icons.people),
-            label: 'Users',
+            label: 'Tab 2',
           ),
           NavigationDestination(
             icon: Icon(Icons.notifications),
-            label: 'Notifications',
+            label: 'Tab 3',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings),
-            label: 'Settings',
+            label: 'Tab 4',
           ),
         ],
       ),
@@ -57,11 +57,11 @@ class MainScreen extends StatelessWidget {
       case 0:
         return CoreRoutePaths.main;
       case 1:
-        return CoreRoutePaths.users;
+        return CoreRoutePaths.feature2;
       case 2:
-        return CoreRoutePaths.notifications;
+        return CoreRoutePaths.feature3;
       case 3:
-        return CoreRoutePaths.settings;
+        return CoreRoutePaths.feature4;
       default:
         return CoreRoutePaths.main;
     }

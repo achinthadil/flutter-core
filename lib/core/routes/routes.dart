@@ -4,14 +4,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/auth/presentation/screens/signin_screen.dart';
 import '../../features/auth/presentation/screens/signup_screen.dart';
+import '../../features/feature2/presentation/screens/feature2_screen.dart';
+import '../../features/feature3/presentation/screens/feature3_screen.dart';
+import '../../features/feature4/presentation/screens/feature4_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/main/presentation/screens/main_screen.dart';
-import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/onboarding/presentation/screens/onboarding_screen.dart';
-import '../../features/settings/presentation/screens/settings_screen.dart';
-import '../../features/users/presentation/screens/users_screen.dart';
 import '../../init_dependencies.dart';
 import '../constants/core_constants.dart';
+import 'route_paths.dart';
 
 class AppRouter {
   static GoRouter createRouter() {
@@ -26,25 +27,25 @@ class AppRouter {
       navigatorKey: rootNavigatorKey,
       debugLogDiagnostics: true,
       initialLocation: isOnboardingComplete
-          ? (userToken != null ? '/' : '/signin')
-          : '/onboarding',
+          ? (userToken != null ? CoreRoutePaths.main : CoreRoutePaths.signin)
+          : CoreRoutePaths.onboarding,
       routes: [
         GoRoute(
-          path: '/onboarding',
+          path: CoreRoutePaths.onboarding,
           pageBuilder: (context, state) => NoTransitionPage<void>(
             key: state.pageKey,
             child: const OnboardingScreen(),
           ),
         ),
         GoRoute(
-          path: '/signin',
+          path: CoreRoutePaths.signin,
           pageBuilder: (context, state) => NoTransitionPage<void>(
             key: state.pageKey,
             child: const SignInScreen(),
           ),
         ),
         GoRoute(
-          path: '/signup',
+          path: CoreRoutePaths.signup,
           pageBuilder: (context, state) => NoTransitionPage<void>(
             key: state.pageKey,
             child: const SignUpScreen(),
@@ -55,31 +56,31 @@ class AppRouter {
           builder: (context, state, child) => MainScreen(child: child),
           routes: [
             GoRoute(
-              path: '/',
+              path: CoreRoutePaths.main,
               pageBuilder: (context, state) => NoTransitionPage<void>(
                 key: state.pageKey,
                 child: const HomeScreen(),
               ),
             ),
             GoRoute(
-              path: '/users', // Matches '/users'
+              path: CoreRoutePaths.feature2, // Matches '/users'
               pageBuilder: (context, state) => NoTransitionPage<void>(
                 key: state.pageKey,
-                child: const UsersScreen(),
+                child: const Feature2Screen(),
               ),
             ),
             GoRoute(
-              path: '/notifications', // Matches '/notifications'
+              path: CoreRoutePaths.feature3, // Matches '/notifications'
               pageBuilder: (context, state) => NoTransitionPage<void>(
                 key: state.pageKey,
-                child: const NotificationsScreen(),
+                child: const Feature3Screen(),
               ),
             ),
             GoRoute(
-              path: '/settings', // Matches '/settings'
+              path: CoreRoutePaths.feature4, // Matches '/settings'
               pageBuilder: (context, state) => NoTransitionPage<void>(
                 key: state.pageKey,
-                child: const SettingsScreen(),
+                child: const Feature4Screen(),
               ),
             ),
           ],
@@ -87,20 +88,6 @@ class AppRouter {
       ],
     );
   }
-}
-
-class CupertinoTransitionPage<T> extends CustomTransitionPage<T> {
-  CupertinoTransitionPage({super.key, required super.child})
-      : super(
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return SlideTransition(
-              position: animation.drive(
-                  Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
-                      .chain(CurveTween(curve: Curves.easeInOut))),
-              child: child,
-            );
-          },
-        );
 }
 
 class NoTransitionPage<T> extends CustomTransitionPage<T> {

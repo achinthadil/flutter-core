@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/common/widgets/base_screen.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class Feature4Screen extends StatelessWidget {
+  const Feature4Screen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const BaseScreen(
-      screenTitle: 'Settings Screen',
+      screenTitle: 'Feature 4 Screen',
     );
   }
 }
