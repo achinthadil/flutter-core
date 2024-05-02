@@ -6,7 +6,9 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/common/cubits/app_user/app_user_cubit.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/routes/route_paths.dart';
+import '../../../../core/utils/show_snackbar.dart';
 import '../../../../init_dependencies.dart';
+import '../../../auth/presentation/blocs/auth_bloc.dart';
 import '../blocs/home_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
         BlocListener<AppUserCubit, AppUserState>(
           listener: (context, state) {
             if (state is AppUserInitial) {
+              showSnackBar(context, "Successfully Logged out");
               context.go(CoreRoutePaths.signin);
             }
           },
@@ -58,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               icon: const Icon(Icons.exit_to_app),
               onPressed: () {
-                context.read<AppUserCubit>().logout();
+                context.read<AuthBloc>().add(AuthLogout());
               },
             ),
           ],

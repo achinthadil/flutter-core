@@ -4,7 +4,6 @@ import 'package:fpdart/fpdart.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/errors/failures.dart';
 import '../../domain/entities/auth.dart';
-import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../data_sources/remote/auth_remote_data_source.dart';
 
@@ -12,17 +11,14 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource authRemoteDataSource;
 
   const AuthRepositoryImpl(this.authRemoteDataSource);
-  @override
-  Future<Either<Failure, User>> currentUser() {
-    throw UnimplementedError();
-  }
 
   @override
-  Future<Either<Failure, Auth>> signInWithEmailAndPassword(
+  Future<Either<Failure, Auth>> signInWithUserNameAndPassword(
       {required String loginCredential}) {
     return _getAuthResponse(
-      () async => await authRemoteDataSource
-          .signInWithEmailAndPassword(loginCredential),
+      () async => await authRemoteDataSource.signInWithUserNameAndPassword(
+        data: loginCredential,
+      ),
     );
   }
 
@@ -38,6 +34,29 @@ class AuthRepositoryImpl implements AuthRepository {
         return left(Failure('Failed to sign in'));
       }
     } on ServerExceptions catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Auth>> currentUser() async {
+    try {
+      final authResponse = await authRemoteDataSource.getCurrentUserData();
+      if (authResponse == null) {
+        return left(Failure('No logged in user'));
+      }
+      return right(authResponse);
+    } on AuthException catch (e) {
+      return left(Failure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> logout() async {
+    try {
+      authRemoteDataSource.logout();
+      return right(true);
+    } on AuthException catch (e) {
       return left(Failure(e.message));
     }
   }

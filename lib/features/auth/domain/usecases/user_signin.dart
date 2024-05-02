@@ -12,7 +12,7 @@ class UserSignIn implements UseCase<Auth, UserSignInParams> {
 
   @override
   Future<Either<Failure, Auth>> call(UserSignInParams params) {
-    return authRepository.signInWithEmailAndPassword(
+    return authRepository.signInWithUserNameAndPassword(
       loginCredential: params.loginCredential,
     );
   }

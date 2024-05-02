@@ -14,7 +14,6 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     required SharedPreferences prefs,
   })  : _prefs = prefs,
         super(OnboardingInitial()) {
-    debugPrint('🥲 LOLL');
     on<OnboardingEvent>((_, emit) => emit(OnboardingLoadingState()));
     on<OnboardingCompleteEvent>(_handleOnboardingComplete);
   }

@@ -5,4 +5,7 @@ class CoreConstants {
   //! shared pref
   static const isOnboardingComplete = 'isOnboardingComplete';
   static const userToken = 'userToken';
+  static const userID = 'userID';
+  static const userName = 'userName';
+  static const userEmail = 'userEmail';
 }

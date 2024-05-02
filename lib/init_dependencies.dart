@@ -8,11 +8,17 @@ import 'core/common/cubits/app_user/app_user_cubit.dart';
 import 'core/network/app_dio.dart';
 import 'core/routes/routes.dart';
 import 'features/auth/data/data_sources/remote/auth_remote_data_source.dart';
+import 'features/auth/data/data_sources/remote/auth_remote_data_source_impl.dart';
+import 'features/auth/data/data_sources/remote/retrofit/auth_retrofit_client.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
+import 'features/auth/domain/usecases/current_user.dart';
+import 'features/auth/domain/usecases/user_logout.dart';
 import 'features/auth/domain/usecases/user_signin.dart';
 import 'features/auth/presentation/blocs/auth_bloc.dart';
 import 'features/home/data/data_sources/remote_data_sources/home_remote_data_source.dart';
+import 'features/home/data/data_sources/remote_data_sources/home_remote_data_source_impl.dart';
+import 'features/home/data/data_sources/remote_data_sources/retrofit/home_retrofit_client.dart';
 import 'features/home/data/repositories/home_repository_impl.dart';
 import 'features/home/domain/repositories/home_repository.dart';
 import 'features/home/domain/usecases/get_products.dart';
@@ -51,8 +57,7 @@ Future<void> initDependencies() async {
 }
 
 void _coreDependencies() {
-  serviceLocator
-      .registerLazySingleton(() => AppUserCubit(prefs: serviceLocator()));
+  serviceLocator.registerLazySingleton(() => AppUserCubit());
 }
 
 void _dio() {
@@ -68,13 +73,21 @@ void _onboarding() {
 
 void _auth() {
   serviceLocator
-    ..registerFactory<AuthRemoteDataSource>(
-        () => AuthRemoteDataSource(serviceLocator()))
+    ..registerFactory<AuthRetrofitClient>(
+        () => AuthRetrofitClient(serviceLocator()))
+    ..registerFactory<AuthRemoteDataSource>(() => AuthRemoteDataSourceImpl(
+        authRetrofitClient: serviceLocator(), prefs: serviceLocator()))
     ..registerFactory<AuthRepository>(
         () => AuthRepositoryImpl(serviceLocator()))
     ..registerFactory(() => UserSignIn(serviceLocator()))
-    ..registerLazySingleton(() =>
-        AuthBloc(userSignIn: serviceLocator(), appUserCubit: serviceLocator()));
+    ..registerFactory(() => CurrentUser(serviceLocator()))
+    ..registerFactory(() => UserLogout(serviceLocator()))
+    ..registerLazySingleton(() => AuthBloc(
+          userSignIn: serviceLocator(),
+          appUserCubit: serviceLocator(),
+          currentUser: serviceLocator(),
+          userLogout: serviceLocator(),
+        ));
 }
 
 void _main() {
@@ -83,8 +96,10 @@ void _main() {
 
 void _home() {
   serviceLocator
+    ..registerFactory<HomeRetrofitClient>(
+        () => HomeRetrofitClient(serviceLocator()))
     ..registerFactory<HomeRemoteDataSource>(
-        () => HomeRemoteDataSource(serviceLocator()))
+        () => HomeRemoteDataSourceImpl(homeRetrofitClient: serviceLocator()))
     ..registerFactory<HomeRepository>(
         () => HomeRepositoryImpl(serviceLocator()))
     ..registerFactory(() => GetProducts(serviceLocator()))
