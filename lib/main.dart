@@ -22,7 +22,6 @@ void main() async {
     await initDependencies();
   } catch (e) {
     debugPrint('❌ Failed to initialize dependencies: $e');
-    // Consider adding error reporting or recovery logic here
   }
   runApp(
     MultiBlocProvider(
